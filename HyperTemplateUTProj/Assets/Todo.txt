@@ -1,0 +1,15 @@
+1. Default Physics optimization
+2. Static batching on/off management
+3. Occulation culling management
+4. LevelManagerV2 with addressable support
+5. Asset importer pass scripts to handle mesh and texture auto optimization
+6. Scene optimizer script for camera setting and other possibilities
+7. DRS
+8. Ambient light scripts and patch light components in scene(Scene patcher)
+9. Simple entity scripts
+10. A basic scene template where placeholder scripts are put
+11. Audit from sample released game
+12. water patch for depth routines
+13. Perhaps a builtin pool manager?
+14. A boot loader UI(initially only yield null placeholder)
+15. 

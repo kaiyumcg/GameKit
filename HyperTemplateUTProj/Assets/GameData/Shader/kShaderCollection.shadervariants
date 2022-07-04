@@ -1,0 +1,86 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!200 &20000000
+ShaderVariantCollection:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: kShaderCollection
+  m_Shaders:
+  - first: {fileID: 4800000, guid: f04c9486b297dd848909db26983c9ddb, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+      - keywords: ENABLE_EXAMPLE_FEATURE
+        passType: 0
+      - keywords: _SHARP_INERSECTION
+        passType: 0
+      - keywords: ENABLE_EXAMPLE_FEATURE _SHARP_INERSECTION
+        passType: 0
+      - keywords: _SMOOTH_INTERSECTION
+        passType: 0
+      - keywords: ENABLE_EXAMPLE_FEATURE _SMOOTH_INTERSECTION
+        passType: 0
+      - keywords: _SHARP_INERSECTION _SMOOTH_INTERSECTION
+        passType: 0
+      - keywords: ENABLE_EXAMPLE_FEATURE _SHARP_INERSECTION _SMOOTH_INTERSECTION
+        passType: 0
+  - first: {fileID: 4800000, guid: e10a675021dc1414996dede4a5199429, type: 3}
+    second:
+      variants: []
+  - first: {fileID: 4800000, guid: 03d3d2d9679b29149a85b32be26e8645, type: 3}
+    second:
+      variants: []
+  - first: {fileID: 4800000, guid: 241cf505c19a4ed479e32a39a1ed13d5, type: 3}
+    second:
+      variants: []
+  - first: {fileID: 4800000, guid: 16ed3ce2881f4c74ca7747973624d5a8, type: 3}
+    second:
+      variants: []
+  - first: {fileID: 4800000, guid: f6fd73d1518ceeb44aca61057c04c150, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+      - keywords: FOG_DISTANCE_BLEND
+        passType: 0
+      - keywords: VERTICAL_COLOR_BLEND
+        passType: 0
+      - keywords: FOG_DISTANCE_BLEND VERTICAL_COLOR_BLEND
+        passType: 0
+      - keywords: FOG_DISTANCE_BLEND_IN_PIXEL_SHADER
+        passType: 0
+      - keywords: FOG_DISTANCE_BLEND FOG_DISTANCE_BLEND_IN_PIXEL_SHADER
+        passType: 0
+      - keywords: FOG_DISTANCE_BLEND_IN_PIXEL_SHADER VERTICAL_COLOR_BLEND
+        passType: 0
+      - keywords: FOG_DISTANCE_BLEND FOG_DISTANCE_BLEND_IN_PIXEL_SHADER VERTICAL_COLOR_BLEND
+        passType: 0
+  - first: {fileID: 4800000, guid: 872f81fca48c1b64483548c744965a86, type: 3}
+    second:
+      variants: []
+  - first: {fileID: 4800000, guid: 38d79f95c5fcec54ab1823032e4ded07, type: 3}
+    second:
+      variants: []
+  - first: {fileID: 4800000, guid: 68699ba6990c4134a88fa54e4ef928a4, type: 3}
+    second:
+      variants: []
+  - first: {fileID: 4800000, guid: 8bc5c0c6b8751d64cb0962fe99389c68, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+      - keywords: INSTANCING_ON
+        passType: 0
+  - first: {fileID: 4800000, guid: 0ce24aa8603a7db419fb3d7c7d1dbb1e, type: 3}
+    second:
+      variants: []
+  - first: {fileID: 4800000, guid: cd6dcc8cb3a861c458fe71b2e2d4a284, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+      - keywords: PIXELSNAP_ON
+        passType: 0

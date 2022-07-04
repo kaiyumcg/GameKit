@@ -1,0 +1,10 @@
+
+HyperTemplateUTProj/Library/*
+HyperTemplateUTProj/Temp/*
+HyperTemplateUTProj/obj/*
+HyperTemplateUTProj/.vs/*
+HyperTemplateUTProj/Logs/*
+HyperTemplateUTProj/*.vsconfig
+HyperTemplateUTProj/*.sln
+HyperTemplateUTProj/*.csproj
+HyperTemplateUTProj/UserSettings/EditorUserSettings.asset
