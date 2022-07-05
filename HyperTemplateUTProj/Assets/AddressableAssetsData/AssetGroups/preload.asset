@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: preload
+  m_EditorClassIdentifier: 
+  m_GroupName: preload
+  m_Data:
+    m_SerializedData: []
+  m_GUID: e3db2223e0ab1db44b1f31f4fb32a16c
+  m_SerializeEntries:
+  - m_GUID: a1706b58fa98fc44aa73c47eaa563bc8
+    m_Address: Assets/GameData/Animation
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: b857882ff011e864894b2221f777c3ed
+    m_Address: Assets/GameData/Material
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 9d892083c34fb41449bb8eaacb1bdadd
+    m_Address: Assets/GameData/Model
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 5b28222c73a272b4ea3a5e52ff6c7997
+    m_Address: Assets/GameData/Prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 6f4b506cc750b344897467cd41b0fd68
+    m_Address: Assets/GameData/Shader
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 484ac2cf50ac4744b93a3f76f84cf13b
+    m_Address: Assets/GameData/SO
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: ca1cb4f7ac8bf1541b166ea1950fe638
+    m_Address: Assets/GameData/TAsset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: cd92a02abc45f824d88f0bbb598fa52b
+    m_Address: Assets/GameData/Texture
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 0e050f63edff101408de35a999b3aed2
+    m_Address: Assets/GameData/Font
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 487ea5b78bee62d45965b18bee31d9da, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: c05cad87506eb9941b75527ab4b04c87, type: 2}
+    - {fileID: 11400000, guid: f389c4b2bf57b0b4d8fe4987a8e54791, type: 2}

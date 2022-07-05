@@ -11,12 +11,13 @@ float4 PackedUV(float2 sourceUV, float2 time, float speed)
 }
 
 //Depth routine
+//not working todo
 DepthData SampleDepth(float4 screenPos, float3 wPos)
 {
 	DepthData depth = (DepthData)0;
-	depth.raw = 0; //todo
-	depth.eye = 0; //todo
-	depth.linear01 = 1; //todo
+	depth.raw = SAMPLE_DEPTH_TEXTURE_PROJ(_CameraDepthTexture, UNITY_PROJ_COORD(screenPos));
+	depth.eye = LinearEyeDepth(depth.raw);
+	depth.linear01 = Linear01Depth(depth.raw); //todo
 	return depth;
 }
 
