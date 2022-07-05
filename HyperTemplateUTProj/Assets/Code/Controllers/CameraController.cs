@@ -13,7 +13,8 @@ public class CameraController : MonoBehaviour
     bool stopCameraAtOnce = false;
 
     public static CameraController instance;
-    private void Awake()
+
+    void Awake()
     {
         instance = this;
         tr = transform;
