@@ -4,7 +4,7 @@ Shader "Kaiyum/Lit/Texture No Depth"
 {
     Properties
     {
-        _LightingAmount("Lighting Amount", Range(1,5)) = 1.99
+        _LightingAmount("Lighting Amount", Range(0,5)) = 1.99
         _TranslucentColor("Transluent Color", Color) = (1,1,1,1)
         _BaseColor("Color", Color) = (1,1,1,1)
         [HDR]_EmissionColor("Emission", Color) = (0,0,0,0)
@@ -17,15 +17,18 @@ Shader "Kaiyum/Lit/Texture No Depth"
 
         Pass
         {
+            Tags {"LightMode" = "ForwardBase"}
             CGPROGRAM
             #pragma target 2.0
+            #include "Lighting.cginc"
+            #include "UnityCG.cginc"
+            #include "AutoLight.cginc"
 
             #pragma vertex vert  
             #pragma fragment frag 
             #pragma multi_compile_instancing
-
-            #include "UnityCG.cginc"
-
+            #pragma multi_compile_fwdbase nolightmap nodirlightmap nodynlightmap novertexlight
+            
             #define kcolor4 fixed4
             #define kdata4 half4
             #define kdata3 half3
@@ -54,29 +57,31 @@ Shader "Kaiyum/Lit/Texture No Depth"
                     float4 pos : SV_POSITION;
                     kcolor4 col : TEXCOORD1;
                     kdata4 uv : TEXCOORD0;
+                    SHADOW_COORDS(2)
                 };
 
-                v2f vert(AppData i)
+                v2f vert(AppData v)
                 {
-                    v2f output;
-                    UNITY_SETUP_INSTANCE_ID(i);
-                    kdata3 normalDirection = normalize(mul(kdata4(i.normal, 0.0), unity_WorldToObject).xyz);
+                    v2f o;
+                    UNITY_SETUP_INSTANCE_ID(v);
+                    kdata3 normalDirection = normalize(mul(kdata4(v.normal, 0.0), unity_WorldToObject).xyz);
                     kdata3 lightDirection = normalize(_WorldSpaceLightPos0.xyz);
                     kdata3 col = _KLightColor0.rgb * _BaseColor.rgb * max(0.0, dot(normalDirection, lightDirection) * _LightingAmount);
 
                     kdata3 ambientLighting = _TranslucentColor.rgb *_KAMBIENT.rgb;
 
-                    kdata3 posWorld = mul(unity_ObjectToWorld, i.vertex);
+                    kdata3 posWorld = mul(unity_ObjectToWorld, v.vertex);
                     kdata3 viewDirection = normalize(_WorldSpaceCameraPos - posWorld);
                     kdata silhouetteness = 1.0 - abs(dot(viewDirection, normalDirection));
                     col *= silhouetteness;
                     col += ambientLighting;
 
-                    output.col = kcolor4(col, 1.0);
+                    o.col = kcolor4(col, 1.0);
 
-                    output.pos = UnityObjectToClipPos(i.vertex);
-                    output.uv = i.uv;
-                    return output;
+                    o.pos = UnityObjectToClipPos(v.vertex);
+                    o.uv = v.uv;
+                    TRANSFER_SHADOW(o)
+                    return o;
                 }
 
                 kcolor4 frag(v2f i) : COLOR
@@ -84,8 +89,38 @@ Shader "Kaiyum/Lit/Texture No Depth"
                     kcolor4 fcol = tex2D(_BaseMap, i.uv);
                     fcol *= i.col;
                     fcol += _EmissionColor;
+                    fixed shadow = SHADOW_ATTENUATION(i);
+                    fcol *= shadow;
                     return fcol;
                 }
+            ENDCG
+        }
+
+         Pass
+        {
+            Tags {"LightMode" = "ShadowCaster"}
+
+            CGPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+            #pragma multi_compile_shadowcaster
+            #include "UnityCG.cginc"
+
+            struct v2f {
+                V2F_SHADOW_CASTER;
+            };
+
+            v2f vert(appdata_base v)
+            {
+                v2f o;
+                TRANSFER_SHADOW_CASTER_NORMALOFFSET(o)
+                return o;
+            }
+
+            float4 frag(v2f i) : SV_Target
+            {
+                SHADOW_CASTER_FRAGMENT(i)
+            }
             ENDCG
         }
     }
