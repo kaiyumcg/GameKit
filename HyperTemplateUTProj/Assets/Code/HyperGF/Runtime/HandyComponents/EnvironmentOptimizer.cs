@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnvironmentOptimizer : MonoBehaviour
+public class EnvironmentOptimizer : LevelObjectBehaviour
 {
     [SerializeField] List<BatcherData> otherStaticMeshSetRoots;
     [SerializeField] bool shadow = true, occlusionCulling = false;
-    void Awake()
+
+    protected internal override void OnAwake()
     {
+        if (behaviourEnabled == false) { return; }
+
         if (otherStaticMeshSetRoots != null && otherStaticMeshSetRoots.Count > 0)
         {
             var otherMeshHolder = new GameObject("_Gen_OtherMeshes_Holder");
@@ -24,7 +27,7 @@ public class EnvironmentOptimizer : MonoBehaviour
         }
 
         StaticBatchingUtility.Combine(gameObject);
-        transform.OptimizeMeshRenderersInside(shadow, occlusionCulling);
+        transform.ExOptimizeMeshRenderersInside(shadow, occlusionCulling);
     }
 
     void CopyObjectsFromAndDisableOlds(BatcherData root, Transform newRoot)
@@ -53,7 +56,7 @@ public class EnvironmentOptimizer : MonoBehaviour
                 var newMRender = newObject.AddComponent<MeshRenderer>();
                 newMRender.sharedMaterial = oldMRender.sharedMaterial;
 
-                newMRender.Optimize(root.Shadow, root.OcclusionCulling);
+                newMRender.ExOptimize(root.Shadow, root.OcclusionCulling);
             }
         }
     }

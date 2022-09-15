@@ -11,7 +11,6 @@ public class ScaleTweener : MonoBehaviour
     [SerializeField] float forceInitScaleAmount = 1.0f;
     TweenerCore<Vector3, Vector3, VectorOptions> scaleUpTw = null, scaleDownTw = null;
 
-
     public void StartEffect()
     {
         StartCoroutine(TapToStartTweenPlay());

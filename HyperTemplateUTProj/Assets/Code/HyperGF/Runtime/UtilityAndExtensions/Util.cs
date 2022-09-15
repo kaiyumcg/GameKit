@@ -5,7 +5,7 @@ using UnityEngine;
 
 public static class Util
 {
-    public static void DestroyEverythingInside(Transform holder)
+    public static void DestroyEverythingInside(this Transform holder, bool editorExecution = false)
     {
         var delList = new List<GameObject>();
         if (holder.childCount > 0)
@@ -22,7 +22,19 @@ public static class Util
             {
                 var d = delList[i];
                 if (d == null) { continue; }
-                GameObject.Destroy(d);
+                if (editorExecution)
+                {
+#if UNITY_EDITOR
+                    UnityEditor.EditorApplication.delayCall += () =>
+                    {
+                        GameObject.DestroyImmediate(d);
+                    };
+#endif
+                }
+                else
+                {
+                    GameObject.Destroy(d);
+                }
             }
         }
     }

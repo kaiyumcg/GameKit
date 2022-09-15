@@ -5,13 +5,15 @@ using DG.Tweening;
 using DG.Tweening.Core;
 using DG.Tweening.Plugins.Options;
 
-public class LevelBehaviour : LevelObjectBehaviour
+public class LevelBehaviour : LevelObjectBehaviour, ILevelMarker
 {
+    [SerializeField] int levelEndMoney = 50;
     [SerializeField] LevelEndController endController;
     bool gameOver = false;
     static LevelBehaviour instance;
     public bool GameOver { get { return gameOver; } }
     public static LevelBehaviour Instance { get { return instance; } }
+    public int LevelEndMoney { get { return levelEndMoney; } }
 
     protected internal override void OnAwake()
     {
@@ -19,15 +21,14 @@ public class LevelBehaviour : LevelObjectBehaviour
         gameOver = false;
     }
 
-    void LevelComplete()
+    void ILevelMarker.LevelComplete()
     {
         if (gameOver) { return; }
         gameOver = true;
         endController.StartEndSequence();
-        UIManager.Instance.SetShowGameplayUI(false, useTween : false);
     }
 
-    void LevelFail()
+    void ILevelMarker.LevelFail()
     {
         if (gameOver) { return; }
         gameOver = true;

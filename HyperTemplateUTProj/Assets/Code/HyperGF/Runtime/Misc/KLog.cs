@@ -59,4 +59,13 @@ public static class KLog
             Debug.LogException(ex);
         }
     }
+
+    public static void MustTrue(bool assetCondition)
+    {
+        if (KLog.Enabled == false) { return; }
+        if(assetCondition == false)
+        {
+            throw new Exception("condition is not true!");
+        }
+    }
 }

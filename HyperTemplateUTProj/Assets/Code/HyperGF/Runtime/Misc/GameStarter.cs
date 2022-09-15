@@ -33,9 +33,15 @@ public class GameStarter : MonoBehaviour, IPointerDownHandler//, IPointerClickHa
         SceneManager.sceneLoaded -= SceneManager_sceneLoaded;
     }
 
+    public void DisableStarterPanel()
+    {
+        GetComponent<Image>().raycastTarget = false;
+    }
+
     void SceneManager_sceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (scene.name == "boot") { return; }
+        GetComponent<Image>().raycastTarget = true;
         UIManager.Instance.OnRefreshGameStarter();
         UIManager.Instance.SetShowGameplayUI(false, useTween: false);
         gameStarted = false;
@@ -44,7 +50,7 @@ public class GameStarter : MonoBehaviour, IPointerDownHandler//, IPointerClickHa
         if (tw != null && tw.IsActive()) { tw.Kill(); }
         tapToStartTxt.gameObject.SetActive(true);
         tapToStartTxt.color = Color.white;
-        tapToStartTxt.DoBlinkUntil(this, 0.4f, () => { return gameStarted; });
+        tapToStartTxt.ExBlinkUntil(this, 0.4f, () => { return gameStarted; });
 
         StopAllCoroutines();
         StartCoroutine(COR());
@@ -66,7 +72,7 @@ public class GameStarter : MonoBehaviour, IPointerDownHandler//, IPointerClickHa
 
     void HideTapToStartTxt()
     {
-        tw.ResetDT();
+        tw.ExResetDT();
         tw = tapToStartTxt.DOFade(0.0f, 0.4f).OnComplete(() =>
         {
             tapToStartTxt.gameObject.SetActive(false);

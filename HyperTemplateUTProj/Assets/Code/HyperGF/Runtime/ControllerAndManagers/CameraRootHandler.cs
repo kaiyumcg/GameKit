@@ -1,46 +1,95 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
+using DG.Tweening.Core;
+using DG.Tweening.Plugins.Options;
+using UnityEngine.Rendering;
 
 public class CameraRootHandler : LevelObjectBehaviour
 {
-    [SerializeField] bool SmoothFollow = false;
-    [SerializeField] float smoothTime = 0.06f;
-
-    [SerializeField] RangedVector3 rotationOffset;
-    [SerializeField] Vector3 offsetPosition;
     [SerializeField] Transform target;
-    [SerializeField] Camera cam;
-    [SerializeField] Transform cameraTransform;
-    Vector3 velocity = Vector3.zero;
-    float camTrInitPosY;
-    Transform tr, camTr;
-    bool stopCameraAtOnce = false;
+    [SerializeField] bool alwaysUseSmoothing = false;
+    [SerializeField] float transitionSpeed = 0.06f;
+    [SerializeField] float transitionSpeedMultiplier = 0.5f, withinMultiplierTime = 0.8f;
+    [SerializeField] float smoothTime = 0.06f;
+    [SerializeField, DebugView] bool inTransition = false;
+    Transform nextTarget, tr;
+    Vector3 velocity = Vector3.zero, transitionVelocity = Vector3.zero, tranPos;
+    bool nowReady = false;
+    float originalSpeed;
+    TweenerCore<float, float, FloatOptions> tw = null;
 
-    public static CameraRootHandler Instance { get { return instance; } }
-    static CameraRootHandler instance;
+    public static CameraRootHandler instance;
 
-    public void SetOffset(float yOffset)
+    protected internal override void OnAwake()
     {
-        var pos = camTr.localPosition;
-        pos.y = camTrInitPosY + yOffset;
-        camTr.localPosition = pos;
+        Application.targetFrameRate = 60;
+        instance = this;
+        stopCameraAtOnce = false;
     }
 
-    public void StopCameraDueToDeath()
+    private IEnumerator Start()
+    {
+        tr = transform;
+        yield return null;
+        nowReady = true;
+        originalSpeed = transitionSpeed;
+        tranPos = target.position;
+    }
+
+    public void Start_Revive()
+    {
+        tranPos = target.position;
+    }
+    
+    public void FollowSmoothly(Transform nextTarget)
+    {
+        inTransition = true;
+        this.nextTarget = nextTarget;
+
+        tranPos = tr.position;
+
+        var newTransitionSpeed = originalSpeed * transitionSpeedMultiplier;
+        if (tw != null && tw.IsActive()) { tw.Kill(); tw = null; }
+        tw = DOTween.To(() => transitionSpeed, x => transitionSpeed = x, newTransitionSpeed, withinMultiplierTime);
+    }
+
+    bool stopCameraAtOnce = false;
+    public void StopCameraDueToDeathOrLevelEnd()
     {
         stopCameraAtOnce = true;
+        if (tw != null && tw.IsActive()) { tw.Kill(); tw = null; }
     }
 
-    bool isPaused = false;
-    public void EndRoadCameraSetPaused(bool isPaused) { this.isPaused = isPaused; }
-
-    void LateUpdate()
+    public void StopCameraDueToDeath_Revive()
     {
-        if (stopCameraAtOnce || isPaused) { return; }
-        
-        Vector3 tg = target.position + offsetPosition;
-        if (SmoothFollow)
+        stopCameraAtOnce = false;
+        inTransition = false;
+    }
+
+    private void LateUpdate()
+    {
+        if (stopCameraAtOnce) { return; }
+        if (!nowReady) { return; }
+        Vector3 tg;
+        if (inTransition)
+        {
+            tranPos = Vector3.SmoothDamp(tranPos, nextTarget.position, ref transitionVelocity, transitionSpeed);
+            if (Vector3.Distance(tranPos, nextTarget.position) < 5f)
+            {
+                inTransition = false;
+                target = nextTarget;
+                transitionSpeed = originalSpeed;
+            }
+            tg = tranPos;
+        }
+        else
+        {
+            tg = target.position;
+        }
+
+        if (inTransition || alwaysUseSmoothing)
         {
             tr.position = Vector3.SmoothDamp(tr.position, tg, ref velocity, smoothTime);
         }
@@ -48,23 +97,6 @@ public class CameraRootHandler : LevelObjectBehaviour
         {
             tr.position = tg;
         }
-
-        var toTarget = target.position - cameraTransform.position;
-        toTarget = toTarget.normalized + rotationOffset.Get();
-        if (Mathf.Approximately(toTarget.magnitude, 0.0f) == false)
-        {
-            var qot = Quaternion.LookRotation(toTarget, Vector3.up);
-            cameraTransform.rotation = qot;
-        }
-    }
-
-    protected internal override void OnAwake()
-    {
-        camTr = cam.transform;
-        camTrInitPosY = camTr.localPosition.y;
-        cam.depthTextureMode = DepthTextureMode.Depth;
-        instance = this;
-        tr = transform;
-        stopCameraAtOnce = false;
+        //tr.rotation = Player.instance.PlayerRotationRoot.rotation;
     }
 }

@@ -113,8 +113,8 @@ public class CarFakePhysics : MonoBehaviour
         var fdir = targetForwardVector;
         fdir.y = 0.0f;
         var angleBetween = Vector3.SignedAngle(fdir, willDir, Vector3.up);
-        var f_angle = angleBetween.Remap(-45f, 45f, forward_wheel_left_angle, forward_wheel_right_angle);
-        var b_angle = angleBetween.Remap(-45f, 45f, backward_wheel_left_angle, backward_wheel_right_angle);
+        var f_angle = angleBetween.ExRemap(-45f, 45f, forward_wheel_left_angle, forward_wheel_right_angle);
+        var b_angle = angleBetween.ExRemap(-45f, 45f, backward_wheel_left_angle, backward_wheel_right_angle);
         float backwardAngle; float forwardAngle;
         if (angleBetween < 0.0f)
         {

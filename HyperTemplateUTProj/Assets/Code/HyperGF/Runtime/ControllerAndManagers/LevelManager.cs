@@ -13,6 +13,7 @@ using DG.Tweening;
 using DG.Tweening.Core;
 using DG.Tweening.Plugins.Options;
 
+//todo jump to any named or IDed level rather than DoNextLevel
 public delegate bool WhenLoaderFunc();
 [DefaultExecutionOrder(-3000)]
 public class LevelManager : MonoBehaviour

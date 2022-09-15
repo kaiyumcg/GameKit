@@ -26,6 +26,10 @@ public abstract class LevelObjectBehaviour : MonoBehaviour
         OnAwake();
     }
 
+    //todo onEnable or disable variant virtual methods?
+
+    public void SetBehaviourEnabled(bool enabled) { behaviourEnabled = enabled; }
+
     protected virtual void OnDrawDebugObjects() { }
 
 #if UNITY_EDITOR
