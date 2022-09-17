@@ -6,15 +6,13 @@ using UnityEngine;
 
 public static class TransformEx
 {
-    //set global scale
-    public static void SetGlobalScale(this Transform transform, Vector3 globalScale)
+    public static void ExSetGlobalScale(this Transform transform, Vector3 globalScale)
     {
         transform.localScale = Vector3.one;
         var currentGlobalScale = transform.lossyScale;
         transform.localScale = new Vector3(globalScale.x / currentGlobalScale.x, globalScale.y / currentGlobalScale.y, globalScale.z / currentGlobalScale.z);
     }
-
-    public static void DestroyEverythingInside(this Transform holder, bool editorExecution = false)
+    public static void ExDestroyEverythingInside(this Transform holder, bool editorExecution = false)
     {
         var delList = new List<GameObject>();
         if (holder.childCount > 0)
@@ -47,8 +45,7 @@ public static class TransformEx
             }
         }
     }
-
-    public static List<Transform> GetImmediateChilds(this Transform transform)
+    public static List<Transform> ExGetImmediateChilds(this Transform transform)
     {
         var result = new List<Transform>();
         var count = transform.childCount;
@@ -126,7 +123,6 @@ public static class TransformEx
         }
     }
     #endregion
-
 
     #region Foreach With ID
     public static void ExForEachImmediateChilds<T>(this Transform transform, OnDoAnything<Transform, int> Code)

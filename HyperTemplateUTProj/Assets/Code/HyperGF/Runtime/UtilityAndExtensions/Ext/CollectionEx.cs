@@ -213,6 +213,7 @@ public static class CollectionEx
     }
     #endregion
 
+    //todo this method should be "this List<T>" argumented and also returns to avoid writing CollectionEx
     public static List<T> GetListWithCount<T>(int count)
     {
         var result = new List<T>();
@@ -222,6 +223,11 @@ public static class CollectionEx
         }
         return result;
     }
+
+    //todo HasAnyNull
+    //todo Get NotNullCount
+    //todo ForEach from reverse direction of all method support
+
 
     public static bool ExIsValid<T>(this T[] array) { return array != null && array.Length > 0; }
     public static bool ExIsValid<T>(this List<T> list) { return list != null && list.Count > 0; }

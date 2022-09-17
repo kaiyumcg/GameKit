@@ -48,21 +48,38 @@ public static class UIEx
             }
         }
     }
+    public static void ExSetActive(this List<MaskableGraphic> graphics, bool enable, params MaskableGraphic[] exceptions)
+    {
+        if (graphics != null && graphics.Count > 0)
+        {
+            for (int i = 0; i < graphics.Count; i++)
+            {
+                var graphic = graphics[i];
+                if (graphic == null) { continue; }
+                if (exceptions != null)
+                {
+                    if (exceptions.ExContainsInArray(graphic)) { continue; }
+                }
+                graphic.enabled = enable;
+            }
+        }
+    }
     #endregion
 
+    //todo we do not need two private method for to support exceptioned graphics, one is enough
     #region Fade
     public static void ExFade(this List<MaskableGraphic> graphics, float alpha, float duration,
-        ref List<TweenerCore<Color, Color, ColorOptions>> dtList)
+        ref List<Tween> dtList)
     {
         _ExFade(graphics, alpha, duration, ref dtList, null, null);
     }
     public static void ExFade(this List<MaskableGraphic> graphics, float alpha, float duration,
-        ref List<TweenerCore<Color, Color, ColorOptions>> dtList, MonoBehaviour mono, System.Action OnComplete)
+        ref List<Tween> dtList, MonoBehaviour mono, System.Action OnComplete)
     {
         _ExFade(graphics, alpha, duration, ref dtList, OnComplete, mono);
     }
     static void _ExFade(List<MaskableGraphic> graphics, float alpha, float duration,
-        ref List<TweenerCore<Color, Color, ColorOptions>> dtList, System.Action OnComplete, MonoBehaviour mono)
+        ref List<Tween> dtList, System.Action OnComplete, MonoBehaviour mono)
     {
         if (graphics == null || graphics.Count < 1) { return; }
 
@@ -78,10 +95,9 @@ public static class UIEx
         }
         if (invalidList) { return; }
 
-
         if (dtList == null || dtList.Count != graphics.Count)
         {
-            dtList = new List<TweenerCore<Color, Color, ColorOptions>>();
+            dtList = new List<Tween>();
             for (int i = 0; i < graphics.Count; i++)
             {
                 dtList.Add(null);
@@ -98,7 +114,6 @@ public static class UIEx
             {
                 completedCount++;
             });
-
         }
 
         if (mono != null)

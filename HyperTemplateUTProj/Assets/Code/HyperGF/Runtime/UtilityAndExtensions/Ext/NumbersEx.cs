@@ -16,7 +16,7 @@ public static class NumbersEx
     {
         return (value - from1) / (to1 - from1) * (to2 - from2) + from2;
     }
-    public static string GetCoinUIString(this long coinNum)
+    public static string ExGetCoinUIString(this long coinNum)
     {
         long MarkL_K = 9999L;
         long MarkL_M = 1000L * 100L * 10L - 1;
@@ -50,7 +50,7 @@ public static class NumbersEx
         }
         return coinStr;
     }
-    public static string GetCoinUIString(this int coinNum)
+    public static string ExGetCoinUIString(this int coinNum)
     {
         int MarkI_K = 9999;
         int MarkI_M = 1000 * 100 * 10 - 1;
