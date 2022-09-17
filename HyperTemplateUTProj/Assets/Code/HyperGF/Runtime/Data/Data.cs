@@ -288,3 +288,4 @@ public delegate void OnDoAnytingPlayerFunc();
 public delegate void OnDoAnything();
 public delegate void OnDoAnything<T>(T data1);
 public delegate void OnDoAnything<T1, T2>(T1 data1, T2 data2);
+public delegate void OnDoAnything<T1, T2, T3>(T1 data1, T2 data2, T3 data3);
