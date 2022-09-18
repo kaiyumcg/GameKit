@@ -8,8 +8,6 @@ using UnityEngine.UI;
 
 public static class UIEx
 {
-    //todo filter by exception list of maskable graphics so that effects will not be included for them
-
     #region Alpha
     public static void ExSetAlpha(this MaskableGraphic graphic, float alpha)
     {
@@ -78,58 +76,7 @@ public static class UIEx
     {
         _ExFade(graphics, alpha, duration, ref dtList, OnComplete, mono);
     }
-    static void _ExFade(List<MaskableGraphic> graphics, float alpha, float duration,
-        ref List<Tween> dtList, System.Action OnComplete, MonoBehaviour mono)
-    {
-        if (graphics == null || graphics.Count < 1) { return; }
 
-        var invalidList = false;
-        for (int i = 0; i < graphics.Count; i++)
-        {
-            var graphic = graphics[i];
-            if (graphic == null)
-            {
-                invalidList = true;
-                break;
-            }
-        }
-        if (invalidList) { return; }
-
-        if (dtList == null || dtList.Count != graphics.Count)
-        {
-            dtList = new List<Tween>();
-            for (int i = 0; i < graphics.Count; i++)
-            {
-                dtList.Add(null);
-            }
-        }
-
-        dtList.ExResetDT();
-
-        var completedCount = 0;
-        for (int i = 0; i < graphics.Count; i++)
-        {
-            var graphic = graphics[i];
-            dtList[i] = graphic.DOFade(alpha, duration).OnComplete(() =>
-            {
-                completedCount++;
-            });
-        }
-
-        if (mono != null)
-        {
-            mono.StartCoroutine(COR());
-        }
-        IEnumerator COR()
-        {
-            while (true)
-            {
-                if (completedCount >= graphics.Count) { break; }
-                yield return null;
-            }
-            OnComplete?.Invoke();
-        }
-    }
     public static void ExFade(this List<MaskableGraphic> graphics, float alpha, float duration, params MaskableGraphic[] exceptions)
     {
         _ExFade(graphics, alpha, duration, null, null, exceptions);
@@ -139,33 +86,30 @@ public static class UIEx
     {
         _ExFade(graphics, alpha, duration, OnComplete, mono, exceptions);
     }
-    static void _ExFade(List<MaskableGraphic> graphics, float alpha, float duration, System.Action OnComplete, MonoBehaviour mono, MaskableGraphic[] exceptions)
+
+    static List<Tween> _ExFade(List<MaskableGraphic> graphics, float alpha, float duration, 
+        System.Action OnComplete, MonoBehaviour mono, MaskableGraphic[] exceptions)
     {
-        if (graphics == null || graphics.Count < 1) { return; }
-        var validExceptionCount = 0;
-        if (exceptions != null && exceptions.Length > 0)
-        {
-            for (int i = 0; i < exceptions.Length; i++)
-            {
-                if (exceptions[i] != null) { validExceptionCount++; }
-            }
-        }
+        if (graphics.ExIsValid() == false || graphics.ExHasAnyNull()) { return null; }
+
+        var result = new List<Tween>();
+        result = result.ExGetListWithCount(graphics.Count);
+        var validExceptionCount = exceptions.ExNotNullCount();
 
         var completedCount = 0;
-        for (int i = 0; i < graphics.Count; i++)
+        graphics.ExForEach((dt, i) =>
         {
-            var graphic = graphics[i];
-            if (graphic == null) { continue; }
+            var doIt = false;
             if (exceptions != null)
             {
-                if (exceptions.ExContains(graphic)) { continue; }
+                if (exceptions.ExContains(dt)) { doIt = false; }
             }
-            graphic.DOFade(alpha, duration).OnComplete(() =>
+            if(doIt)
+            result[i] = dt.DOFade(alpha, duration).OnComplete(() =>
             {
                 completedCount++;
             });
-        }
-
+        });
         if (mono != null)
         {
             mono.StartCoroutine(COR());
@@ -174,6 +118,8 @@ public static class UIEx
         {
             while (true)
             {
+                if (completedCount >= graphics.Count) { break; }
+
                 if (completedCount >= (graphics.Count - validExceptionCount)) { break; }
                 yield return null;
             }

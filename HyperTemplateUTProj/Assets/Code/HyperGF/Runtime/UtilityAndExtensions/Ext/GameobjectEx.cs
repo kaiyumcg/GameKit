@@ -23,21 +23,21 @@ public static class GameobjectEx
     {
         gameObject.layer = LayerMask.NameToLayer(layerName);
     }
-    public static void ExSetLayerToAllChildren(this GameObject gameObject, string layerName)
+    public static void ExSetLayerToAllChilds(this GameObject gameObject, string layerName)
     {
         gameObject.transform.ExForEachChilds((t) =>
         {
             t.gameObject.ExSetLayer(layerName);
         });
     }
-    public static void ExSetLayerToImmediateChildren(this GameObject gameObject, string layerName)
+    public static void ExSetLayerToImmediateChilds(this GameObject gameObject, string layerName)
     {
         gameObject.transform.ExForEachImmediateChilds((t) =>
         {
             t.gameObject.ExSetLayer(layerName);
         });
     }
-    public static void ExSetLayerToParent(this GameObject gameObject, string layerName)
+    public static void ExSetLayerToParents(this GameObject gameObject, string layerName)
     {
         gameObject.transform.ExForEachParentOnChain((t) =>
         {
