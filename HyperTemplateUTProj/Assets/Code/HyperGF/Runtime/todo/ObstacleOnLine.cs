@@ -38,9 +38,9 @@ public abstract class ObstacleOnLine : GameObstacle
         IEnumerator RunObstacle(LineObstacle desc)
         {
             desc.targets = desc.root.ExGetImmediateChilds();
-            desc.targetPositions = CollectionEx.GetListWithCount<Vector3>(desc.targets.Count);
-            desc.startPositions = CollectionEx.GetListWithCount<Vector3>(desc.targets.Count);
-            desc.endPositions = CollectionEx.GetListWithCount<Vector3>(desc.targets.Count);
+            desc.targetPositions = desc.targetPositions.ExGetListWithCount(desc.targets.Count);
+            desc.startPositions = desc.startPositions.ExGetListWithCount(desc.targets.Count);
+            desc.endPositions = desc.endPositions.ExGetListWithCount(desc.targets.Count);
 
             var targets = desc.targets;
             targets.ExForEach((t, i) =>

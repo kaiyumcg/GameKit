@@ -26,7 +26,7 @@ public static class VectorEx
         var midDist = toTarget.magnitude * 0.5f;
         return pt + toTarget.normalized * midDist;
     }
-    public static bool ExHasCrossed(this Vector3 thisPt, Vector3 point, Vector3 moveDirection)
+    public static bool ExHasPassedPoint(this Vector3 thisPt, Vector3 point, Vector3 moveDirection)
     {
         var toPointDirection = point - thisPt;
         return Vector3.Dot(toPointDirection.normalized, moveDirection.normalized) < 0.0f;

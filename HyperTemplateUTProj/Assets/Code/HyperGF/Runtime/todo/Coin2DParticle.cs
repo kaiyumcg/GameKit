@@ -24,10 +24,10 @@ public class Coin2DParticle : MonoBehaviour
     List<UICoin> coin2Ds = new List<UICoin>();
     Transform coin2DRoot;
     System.Action<int> _CB;
-    List<Tweener> twList;
+    List<Tween> twList;
     bool startedToEnter = false;
     int coinNumHUDNow = 0;
-    TweenerCore<int, int, NoOptions> coinHUDTw = null;
+    Tween coinHUDTw = null;
 
     public UnityEvent onCoinStartedToEnterHUD;
     public UnityEvent<int, int> onCoinReachHUD;
@@ -101,7 +101,7 @@ public class Coin2DParticle : MonoBehaviour
             var oriScale = coinHud.localScale;
             var oriRot = coinHud.localRotation;
 
-            twList = new List<Tweener>();
+            twList = new List<Tween>();
             if (coin2Ds != null && coin2Ds.Count > 0)
             {
                 for (int i = 0; i < coin2Ds.Count; i++)

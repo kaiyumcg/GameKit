@@ -7,140 +7,108 @@ public static class ParticleEx
     #region HouseKeeping
     public static void ExInitParticles(this List<GameParticle> particles)
     {
-        if (particles != null && particles.Count > 0)
-        {
-            for (int i = 0; i < particles.Count; i++)
-            {
-                var eff = particles[i];
-                if (eff == null) { continue; }
-                eff.Init();
-            }
-        }
+        particles.ExForEach(p => { if (p != null) { p.Init(); } });
     }
     public static void ExInitParticles(this GameParticle[] particles)
     {
-        if (particles != null && particles.Length > 0)
-        {
-            for (int i = 0; i < particles.Length; i++)
-            {
-                var eff = particles[i];
-                if (eff == null) { continue; }
-                eff.Init();
-            }
-        }
+        particles.ExForEach(p => { if (p != null) { p.Init(); } });
     }
     #endregion
 
     #region NormalPlayback
     public static void ExPlayParticles(this ParticleSystem[] sysList)
     {
-        if (sysList != null && sysList.Length > 0)
+        sysList.ExForEach(sys =>
         {
-            for (int i = 0; i < sysList.Length; i++)
+            if (sys != null)
             {
-                var sys = sysList[i];
-                if (sys == null) { continue; }
                 if (sys.isPlaying)
                 {
                     sys.Stop();
                 }
                 sys.Play();
             }
-        }
+        });
     }
     public static void ExPlayParticles(this List<ParticleSystem> sysList)
     {
-        if (sysList != null && sysList.Count > 0)
+        sysList.ExForEach(sys =>
         {
-            for (int i = 0; i < sysList.Count; i++)
+            if (sys != null)
             {
-                var sys = sysList[i];
-                if (sys == null) { continue; }
                 if (sys.isPlaying)
                 {
                     sys.Stop();
                 }
                 sys.Play();
             }
-        }
+        });
     }
     public static void ExStopParticles(this ParticleSystem[] sysList)
     {
-        if (sysList != null && sysList.Length > 0)
+        sysList.ExForEach(sys =>
         {
-            for (int i = 0; i < sysList.Length; i++)
+            if (sys != null)
             {
-                var sys = sysList[i];
-                if (sys == null) { continue; }
                 if (sys.isPlaying)
                 {
                     sys.Stop();
                 }
             }
-        }
+        });
     }
     public static void ExStopParticles(this List<ParticleSystem> sysList)
     {
-        if (sysList != null && sysList.Count > 0)
+        sysList.ExForEach(sys =>
         {
-            for (int i = 0; i < sysList.Count; i++)
+            if (sys != null)
             {
-                var sys = sysList[i];
-                if (sys == null) { continue; }
                 if (sys.isPlaying)
                 {
                     sys.Stop();
                 }
             }
-        }
+        });
     }
     public static void ExPlayParticles(this List<GameParticle> particles)
     {
-        if (particles != null && particles.Count > 0)
+        particles.ExForEach(sys =>
         {
-            for (int i = 0; i < particles.Count; i++)
+            if (sys != null)
             {
-                var eff = particles[i];
-                if (eff == null) { continue; }
-                eff.Play();
+                sys.Play();
             }
-        }
+        });
     }
     public static void ExPlayParticles(this GameParticle[] particles)
     {
-        if (particles != null && particles.Length > 0)
+        particles.ExForEach(sys =>
         {
-            for (int i = 0; i < particles.Length; i++)
+            if (sys != null)
             {
-                var eff = particles[i];
-                if (eff == null) { continue; }
-                eff.Play();
+                sys.Play();
             }
-        }
+        });
     }
     public static void ExStopParticles(this List<GameParticle> particles)
     {
-        if (particles != null && particles.Count > 0)
+        particles.ExForEach(sys =>
         {
-            for (int i = 0; i < particles.Count; i++)
+            if (sys != null)
             {
-                var eff = particles[i];
-                if (eff == null) { continue; }
-                eff.Stop();
+                sys.Stop();
             }
-        }
+        });
     }
     public static void ExStopParticles(this GameParticle[] particles)
     {
-        if (particles != null && particles.Length > 0)
+        particles.ExForEach(sys =>
         {
-            for (int i = 0; i < particles.Length; i++)
+            if (sys != null)
             {
-                var eff = particles[i];
-                if (eff == null) { continue; }
-                eff.Stop();
+                sys.Stop();
             }
-        }
+        });
     }
     #endregion
 

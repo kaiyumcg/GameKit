@@ -27,7 +27,7 @@ public static class UIEx
                 if (graphic == null) { continue; }
                 if (exceptions != null)
                 {
-                    if (exceptions.ExContainsInArray(graphic)) { continue; }
+                    if (exceptions.ExContains(graphic)) { continue; }
                 }
                 graphic.ExSetAlpha(alpha);
             }
@@ -58,7 +58,7 @@ public static class UIEx
                 if (graphic == null) { continue; }
                 if (exceptions != null)
                 {
-                    if (exceptions.ExContainsInArray(graphic)) { continue; }
+                    if (exceptions.ExContains(graphic)) { continue; }
                 }
                 graphic.enabled = enable;
             }
@@ -158,7 +158,7 @@ public static class UIEx
             if (graphic == null) { continue; }
             if (exceptions != null)
             {
-                if (exceptions.ExContainsInArray(graphic)) { continue; }
+                if (exceptions.ExContains(graphic)) { continue; }
             }
             graphic.DOFade(alpha, duration).OnComplete(() =>
             {
@@ -184,17 +184,17 @@ public static class UIEx
 
     #region Color
     public static void ExColor(this List<MaskableGraphic> graphics, Color endColor, float duration,
-        ref List<TweenerCore<Color, Color, ColorOptions>> dtList)
+        ref List<Tween> dtList)
     {
         _ExColor(graphics, endColor, duration, ref dtList, null, null);
     }
     public static void ExColor(this List<MaskableGraphic> graphics, Color endColor, float duration,
-        ref List<TweenerCore<Color, Color, ColorOptions>> dtList, MonoBehaviour mono, System.Action OnComplete)
+        ref List<Tween> dtList, MonoBehaviour mono, System.Action OnComplete)
     {
         _ExColor(graphics, endColor, duration, ref dtList, OnComplete, mono);
     }
     static void _ExColor(List<MaskableGraphic> graphics, Color endColor, float duration,
-        ref List<TweenerCore<Color, Color, ColorOptions>> dtList, System.Action OnComplete, MonoBehaviour mono)
+        ref List<Tween> dtList, System.Action OnComplete, MonoBehaviour mono)
     {
         if (graphics == null || graphics.Count < 1) { return; }
 
@@ -213,7 +213,7 @@ public static class UIEx
 
         if (dtList == null || dtList.Count != graphics.Count)
         {
-            dtList = new List<TweenerCore<Color, Color, ColorOptions>>();
+            dtList = new List<Tween>();
             for (int i = 0; i < graphics.Count; i++)
             {
                 dtList.Add(null);
@@ -299,17 +299,17 @@ public static class UIEx
 
     #region FillAmount
     public static void ExFillAmount(this List<Image> images, float endAmount, float duration,
-        ref List<TweenerCore<float, float, FloatOptions>> dtList)
+        ref List<Tween> dtList)
     {
         _ExFill(images, endAmount, duration, ref dtList, null, null);
     }
     public static void ExFillAmount(this List<Image> images, float endAmount, float duration,
-        ref List<TweenerCore<float, float, FloatOptions>> dtList, MonoBehaviour mono, System.Action OnComplete)
+        ref List<Tween> dtList, MonoBehaviour mono, System.Action OnComplete)
     {
         _ExFill(images, endAmount, duration, ref dtList, OnComplete, mono);
     }
     static void _ExFill(List<Image> images, float endAmount, float duration,
-        ref List<TweenerCore<float, float, FloatOptions>> dtList, System.Action OnComplete, MonoBehaviour mono)
+        ref List<Tween> dtList, System.Action OnComplete, MonoBehaviour mono)
     {
         if (images == null || images.Count < 1) { return; }
 
@@ -328,7 +328,7 @@ public static class UIEx
 
         if (dtList == null || dtList.Count != images.Count)
         {
-            dtList = new List<TweenerCore<float, float, FloatOptions>>();
+            dtList = new List<Tween>();
             for (int i = 0; i < images.Count; i++)
             {
                 dtList.Add(null);

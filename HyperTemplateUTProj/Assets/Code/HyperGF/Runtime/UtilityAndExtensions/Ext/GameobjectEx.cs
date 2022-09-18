@@ -19,7 +19,29 @@ public static class GameobjectEx
             }
         }
     }
-
-    //todo set layer, set layer to all children
-
+    public static void ExSetLayer(this GameObject gameObject, string layerName)
+    {
+        gameObject.layer = LayerMask.NameToLayer(layerName);
+    }
+    public static void ExSetLayerToAllChildren(this GameObject gameObject, string layerName)
+    {
+        gameObject.transform.ExForEachChilds((t) =>
+        {
+            t.gameObject.ExSetLayer(layerName);
+        });
+    }
+    public static void ExSetLayerToImmediateChildren(this GameObject gameObject, string layerName)
+    {
+        gameObject.transform.ExForEachImmediateChilds((t) =>
+        {
+            t.gameObject.ExSetLayer(layerName);
+        });
+    }
+    public static void ExSetLayerToParent(this GameObject gameObject, string layerName)
+    {
+        gameObject.transform.ExForEachParentOnChain((t) =>
+        {
+            t.gameObject.ExSetLayer(layerName);
+        });
+    }
 }
