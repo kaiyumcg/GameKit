@@ -17,14 +17,9 @@ public static class DoTweenEx
     }
     public static void ExResetDT(this List<Tween> dtList)
     {
-        if (dtList != null && dtList.Count > 0)
+        dtList.ExForEach((dt) =>
         {
-            for (int i = 0; i < dtList.Count; i++)
-            {
-                var dt = dtList[i];
-                if (dt == null) { continue; }
-                dt.ExResetDT();
-            }
-        }
+            if (dt != null) { dt.ExResetDT(); }
+        });
     }
 }
