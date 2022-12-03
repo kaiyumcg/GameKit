@@ -1,2 +1,2 @@
-# HyperTemplate
-A hypercasual game project template using Unity Engine
+# About
+A template for starting games(mainly mobile hypercasual-casual-midcore titles)
