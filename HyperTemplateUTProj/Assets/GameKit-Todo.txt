@@ -1,0 +1,18 @@
+Default Physics optimization
+
+Simple entity scripts
+
+Water
+Perhaps a builtin pool manager?
+
+tag for component and actor?
+
+UI in boot scene
+
+a sample level where scripts are properly placed as placeholder
+
+Scene patcher for mesh renderer, skinned mesh renderer, 
+light for ambient color, scene skybox placement, static batching toggle, occultion culling on/off, 
+camera dynamic resolution, 
+
+Asset importer pass scripts to handle mesh and texture auto optimization
